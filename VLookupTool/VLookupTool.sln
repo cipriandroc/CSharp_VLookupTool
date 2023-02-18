@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VLookupTool", "VLookupTool\VLookupTool.csproj", "{28AC845C-F766-4A34-9310-3A31EDE1678C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager", "FileManager\FileManager.csproj", "{117E6261-FED5-4628-91F5-2B71C1BAFEF8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28AC845C-F766-4A34-9310-3A31EDE1678C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AC845C-F766-4A34-9310-3A31EDE1678C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AC845C-F766-4A34-9310-3A31EDE1678C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AC845C-F766-4A34-9310-3A31EDE1678C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117E6261-FED5-4628-91F5-2B71C1BAFEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117E6261-FED5-4628-91F5-2B71C1BAFEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117E6261-FED5-4628-91F5-2B71C1BAFEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117E6261-FED5-4628-91F5-2B71C1BAFEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0EA5C855-6BFD-44CC-A35B-B9762E46BC0A}
+	EndGlobalSection
+EndGlobal
