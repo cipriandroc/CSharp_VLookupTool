@@ -1,38 +1,55 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FileManager.Enums;
+using Spectre.Console;
 
 namespace FileManager.Services
 {
     public class Manager
     {
-        public static void DisplayDriveContents(List<string> fileExtensions)
+        public static string Start(List<string> fileExtensions)
         {
+            string getFile;
             string currentDir = Path.GetPathRoot(Directory.GetCurrentDirectory());
             bool exit = false;
 
             while (!exit)
             {
-                Console.WriteLine("Current directory: " + currentDir);
-                List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
+                string input = DisplayLocationContents(fileExtensions, currentDir);
 
-                List<string> optionList = new List<string>
-                    { "UpOneLevel", "exit"};
+                if(ContinueLoop(input))
+                {
+                    break;
+                }
 
-                var input = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("Enter a directory name to change to, or 'exit' to quit: ")
-                        .PageSize(15)
-                        .MoreChoicesText("[grey](Move up and down to reveal more objects)[/]")
-                        .AddChoiceGroup("options", optionList)
-                        .AddChoices(childItems)
-                        );
+                getFile = GetTargetFile(currentDir, input);
 
-                ParseInput(ref currentDir, ref exit, input);
+                if (!String.IsNullOrEmpty(getFile))
+                {
+                    return getFile;
+                }
+
+                currentDir = GetFolder(currentDir, input);
             }
+
+            return null;
+        }
+        private static string DisplayLocationContents(List<string> fileExtensions, string currentDir)
+        {
+            Console.WriteLine("Current directory: " + currentDir);
+            List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
+
+            List<string> optionList = new List<string>
+                    { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.exit.ToString() };
+
+            var input = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Enter a directory name to change to, or 'exit' to quit: ")
+                    .PageSize(15)
+                    .MoreChoicesText("[grey](Move up and down to reveal more objects)[/]")
+                    .AddChoiceGroup(ConsoleOptions.options.ToString(), optionList)
+                    .AddChoices(childItems)
+                    );
+
+            return input;
         }
 
         private static List<string> ConcatDirectoriesAndFiles(List<string> fileExtensions, string currentDir)
@@ -66,48 +83,71 @@ namespace FileManager.Services
             return matchingFiles;
         }
 
-        private static void ParseInput(ref string currentDir, ref bool exit, string input)
+        private static bool ContinueLoop(string input)
         {
-            if (input.ToLower() == "exit")
+            if (input == ConsoleOptions.exit.ToString())
             {
-                exit = true;
+                return true;
             }
-            else if (input == "UpOneLevel")
+
+            return false;
+        }
+
+        private static string GetTargetFile(string currentDir, string input)
+        {
+            string newPath = Path.Combine(currentDir, input);
+
+            if (File.Exists(newPath))
             {
-                string[] splitPath = currentDir.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
-                string newPath = String.Join(Path.DirectorySeparatorChar, splitPath);
+                Console.WriteLine("You picked a file!!!2123");
+                return newPath;
+            }
 
-                if (newPath == currentDir.Split(Path.DirectorySeparatorChar)[0])
-                {
-                    newPath = String.Concat(newPath, Path.DirectorySeparatorChar);
-                }
+            return null;
+        }
+        private static string GetFolder(string currentDir, string input)
+        {
+            string newPath;
 
-                if (Directory.Exists(newPath))
-                {
-                    currentDir = newPath;
-                }
-                else
-                {
-                    Console.WriteLine($"Invalid directory. {newPath}");
-                }
+            if (input == ConsoleOptions.UpOneLevel.ToString())
+            {
+                newPath = GetPreviousDirectory(currentDir);
+
+                return CheckValidDirectory(currentDir, newPath);
             }
             else
             {
                 // check if the input is a valid directory
-                string newPath = Path.Combine(currentDir, input);
+                newPath = Path.Combine(currentDir, input);
 
-                if (File.Exists(newPath))
-                {
-                    Console.WriteLine("You picked a file!!!2123");
-                }
-                else if (Directory.Exists(newPath))
-                {
-                    currentDir = newPath;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid directory.");
-                }
+                return CheckValidDirectory(currentDir, newPath);
+            }
+        }
+
+        private static string GetPreviousDirectory(string currentDir)
+        {
+            string newPath;
+            string[] splitPath = currentDir.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
+            newPath = String.Join(Path.DirectorySeparatorChar, splitPath);
+
+            if (newPath == currentDir.Split(Path.DirectorySeparatorChar)[0])
+            {
+                newPath = String.Concat(newPath, Path.DirectorySeparatorChar);
+            }
+
+            return newPath;
+        }
+
+        private static string CheckValidDirectory(string currentDir, string newPath)
+        {
+            if (Directory.Exists(newPath))
+            {
+                return newPath;
+            }
+            else
+            {
+                Console.WriteLine($"Invalid directory. {newPath}");
+                return currentDir;
             }
         }
     }

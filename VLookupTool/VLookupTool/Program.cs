@@ -4,10 +4,17 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            List<string> fileExtensions = new List<string> { ".csv", ".json", ".xlsx", ".svf", ".xml" };
 
-            FileManager.Program.Start(fileExtensions);
+            //supported file extensions
+            List<string> fileExtensions = new List<string> { ".csv", ".json", ".xlsx", ".xml" };
+
+            string file = FileManager.Program.Start(fileExtensions);
+
+            if (String.IsNullOrEmpty(file)) 
+            { 
+                Console.WriteLine($"you returned: {file}"); 
+            }
+
         }
     }
 }

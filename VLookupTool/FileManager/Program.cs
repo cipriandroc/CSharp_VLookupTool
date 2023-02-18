@@ -5,9 +5,9 @@ namespace FileManager
     public class Program
     {
 
-        public static void Start(List<string> fileExtensions)
+        public static string Start(List<string> fileExtensions)
         {
-            Manager.DisplayDriveContents(fileExtensions);
+            return Manager.Start(fileExtensions);
         }
         
     }
