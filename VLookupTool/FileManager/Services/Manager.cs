@@ -34,7 +34,6 @@ namespace FileManager.Services
         }
         private static string DisplayLocationContents(List<string> fileExtensions, string currentDir)
         {
-            Console.WriteLine("Current directory: " + currentDir);
             List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
 
             List<string> optionList = new List<string>
@@ -42,7 +41,7 @@ namespace FileManager.Services
 
             var input = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Enter a directory name to change to, or 'exit' to quit: ")
+                    .Title($"[grey]current path: {currentDir}[/]")
                     .PageSize(15)
                     .MoreChoicesText("[grey](Move up and down to reveal more objects)[/]")
                     .AddChoiceGroup(ConsoleOptions.options.ToString(), optionList)

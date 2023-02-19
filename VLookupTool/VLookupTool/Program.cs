@@ -1,4 +1,6 @@
-﻿namespace VLookupTool
+﻿using Spectre.Console;
+
+namespace VLookupTool
 {
     internal class Program
     {
@@ -7,12 +9,25 @@
 
             //supported file extensions
             List<string> fileExtensions = new List<string> { ".csv", ".json", ".xlsx", ".xml" };
+            
+            Console.WriteLine("Select source file for VLOOKUP");
+            string fileA = FileManager.Program.Start(fileExtensions);
+            if (!String.IsNullOrEmpty(fileA))
+            {
+                AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileA}[/]" + "\n"));
+            }
 
-            string file = FileManager.Program.Start(fileExtensions);
+            Console.WriteLine("Select target file for VLOOKUP");
+            string fileB = FileManager.Program.Start(fileExtensions);
+            if (!String.IsNullOrEmpty(fileB))
+            {
+                Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+                Console.WriteLine($"selected: {fileB}");
+            }
 
-            if (!String.IsNullOrEmpty(file)) 
+            if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
             { 
-                Console.WriteLine($"you returned: {file}"); 
+                //begin processing
             }
 
         }
