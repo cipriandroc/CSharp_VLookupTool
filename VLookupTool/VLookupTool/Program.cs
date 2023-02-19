@@ -28,6 +28,7 @@ namespace VLookupTool
             if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
             { 
                 //begin processing
+
             }
 
         }
