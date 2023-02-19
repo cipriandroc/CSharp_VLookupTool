@@ -31,6 +31,13 @@ namespace VLookupTool
                 //begin processing
                 List<Dictionary<string, string>> loadFileA = CSVLoader.Load(fileA);
                 List<Dictionary<string, string>> loadFileB = CSVLoader.Load(fileB);
+
+                //get dict fileA keys
+                //get dict fileB keys
+                //ask user for column match point
+                //perform match - create new dict with A and B dict
+                //ask user for columns to add from dict B to dict A
+                //export 
             }
 
         }
