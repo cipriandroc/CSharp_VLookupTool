@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using VLookupTool.FileLoaders;
+using VLookupTool.Services;
 
 namespace VLookupTool
 {
@@ -22,8 +23,7 @@ namespace VLookupTool
             string fileB = FileManager.Program.Start(fileExtensions);
             if (!String.IsNullOrEmpty(fileB))
             {
-                Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-                Console.WriteLine($"selected: {fileB}");
+                AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileB}[/]" + "\n"));
             }
 
             if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
@@ -32,9 +32,24 @@ namespace VLookupTool
                 List<Dictionary<string, string>> loadFileA = CSVLoader.Load(fileA);
                 List<Dictionary<string, string>> loadFileB = CSVLoader.Load(fileB);
 
-                //get dict fileA keys
-                //get dict fileB keys
-                //ask user for column match point
+                List<string> keysFileA = ExtractDictKeys.Execute(loadFileA[0]);
+                List<string> keysFileB = ExtractDictKeys.Execute(loadFileB[0]);
+
+                string columnFileA = StringFromListSelector.GetString(keysFileA);
+                string columnFileB = StringFromListSelector.GetString(keysFileB);
+
+                
+                foreach (Dictionary<string, string> rowA in loadFileA) 
+                { 
+                    foreach (Dictionary<string, string> rowB in loadFileB) 
+                    { 
+                        if (rowA[columnFileA] == rowB[columnFileB])
+                        {
+                            Console.WriteLine($"found match for:{rowA[columnFileA]}");
+                        }
+                    }
+                }
+
                 //perform match - create new dict with A and B dict
                 //ask user for columns to add from dict B to dict A
                 //export 
