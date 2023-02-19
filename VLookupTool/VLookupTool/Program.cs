@@ -13,14 +13,14 @@ namespace VLookupTool
             List<string> fileExtensions = new List<string> { ".csv" };
             
             Console.WriteLine("Select source file for VLOOKUP");
-            string fileA = FileManager.Program.Start(fileExtensions);
+            string fileA = FileManager.Program.Start(fileExtensions, false);
             if (!String.IsNullOrEmpty(fileA))
             {
                 AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileA}[/]" + "\n"));
             }
 
             Console.WriteLine("Select target file for VLOOKUP");
-            string fileB = FileManager.Program.Start(fileExtensions);
+            string fileB = FileManager.Program.Start(fileExtensions, false);
             if (!String.IsNullOrEmpty(fileB))
             {
                 AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileB}[/]" + "\n"));
@@ -102,7 +102,15 @@ namespace VLookupTool
                     parseListOfDictsToStrings.Add(String.Join(',', rowA.Values));                    
                 }
 
-                System.IO.File.WriteAllLines("parsedFile.csv", parseListOfDictsToStrings);
+                Console.WriteLine("Select export file location");
+                string exportLocation = FileManager.Program.Start(new List<string> { }, true);
+
+
+                Console.WriteLine($"you selected export location as : {exportLocation}");
+
+                string exportFileLocation = String.Concat(exportLocation, Path.DirectorySeparatorChar, "parsedFile.csv");
+
+                System.IO.File.WriteAllLines(exportFileLocation, parseListOfDictsToStrings);
 
             }
         }

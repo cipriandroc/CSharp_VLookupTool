@@ -10,6 +10,7 @@ namespace FileManager.Enums
     {
         options,
         UpOneLevel,
+        SelectDirectory,
         exit
     }
 }

@@ -5,7 +5,7 @@ namespace FileManager.Services
 {
     public class Manager
     {
-        public static string Start(List<string> fileExtensions)
+        public static string Start(List<string> fileExtensions, bool DirectorySelector)
         {
             string getFile;
             string currentDir = Path.GetPathRoot(Directory.GetCurrentDirectory());
@@ -13,7 +13,7 @@ namespace FileManager.Services
 
             while (!exit)
             {
-                string input = DisplayLocationContents(fileExtensions, currentDir);
+                string input = DisplayLocationContents(fileExtensions, currentDir, DirectorySelector);
 
                 if(ContinueLoop(input))
                 {
@@ -26,18 +26,27 @@ namespace FileManager.Services
                 {
                     return getFile;
                 }
+                if (DirectorySelector && input == ConsoleOptions.SelectDirectory.ToString())
+                {
+                    return currentDir;
+                }
 
                 currentDir = DirectoryProcessor.Get(currentDir, input);
             }
 
             return null;
         }
-        private static string DisplayLocationContents(List<string> fileExtensions, string currentDir)
+        private static string DisplayLocationContents(List<string> fileExtensions, string currentDir, bool DirectorySelector)
         {
             List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
 
             List<string> optionList = new List<string>
                     { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.exit.ToString() };
+
+            if (DirectorySelector)
+            {
+                optionList.Add(ConsoleOptions.SelectDirectory.ToString());
+            }
 
             var input = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
