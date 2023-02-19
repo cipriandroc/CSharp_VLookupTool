@@ -60,11 +60,43 @@ namespace VLookupTool
                 }
 
                 List<string> newColumnKeys = ExtractDictKeys.Execute(loadFileA[0]);
-                string header = String.Join(',', newColumnKeys);
+
+                //parse column keys to identify if any contains comma and add double quotes so CSV doesn't split headers
+                List<string> parseNewColumnKeys = new List<string>();
+                foreach (string key in newColumnKeys)
+                {
+                    string parseKey;
+
+                    if (key.Contains(','))
+                    {
+                        parseKey = '"' + key + '"';
+                    }
+                    else
+                    {
+                        parseKey = key;
+                    }
+
+                    parseNewColumnKeys.Add(parseKey);
+                }
+
+                string header = String.Join(',', parseNewColumnKeys);
+
                 List<string> parseListOfDictsToStrings = new List<string>();
                 parseListOfDictsToStrings.Add(header);
 
+                //parse list of dicts and add double quotes for any value that contains comma so CSV doesn't split column order
+                foreach (Dictionary<string, string> rowA in loadFileA)
+                {
+                    foreach (string key in rowA.Keys)
+                    {
+                        if (rowA[key].Contains(','))
+                        {
+                            rowA[key] = '"' + rowA[key] + '"';
+                        }
+                    }
+                }
 
+                //add dict values to list 
                 foreach (Dictionary<string, string> rowA in loadFileA)
                 {
                     parseListOfDictsToStrings.Add(String.Join(',', rowA.Values));                    
