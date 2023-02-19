@@ -72,11 +72,7 @@ namespace VLookupTool
 
                 System.IO.File.WriteAllLines("parsedFile.csv", parseListOfDictsToStrings);
 
-                //perform match - create new dict with A and B dict
-                //ask user for columns to add from dict B to dict A
-                //export 
             }
-
         }
     }
 }
