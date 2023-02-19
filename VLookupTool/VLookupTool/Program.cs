@@ -10,7 +10,7 @@
 
             string file = FileManager.Program.Start(fileExtensions);
 
-            if (String.IsNullOrEmpty(file)) 
+            if (!String.IsNullOrEmpty(file)) 
             { 
                 Console.WriteLine($"you returned: {file}"); 
             }
