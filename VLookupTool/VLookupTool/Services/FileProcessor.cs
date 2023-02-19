@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace VLookupTool.Services
 {
-    internal class FileProcessor
+    public static class FileProcessor
     {
+
+        public static void LoadFile(string filePath)
+        {
+
+        }
 
         //load mainCSV file
         //load secondary CSV file
