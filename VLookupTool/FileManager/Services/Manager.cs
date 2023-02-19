@@ -140,15 +140,24 @@ namespace FileManager.Services
 
         private static string CheckValidDirectory(string currentDir, string newPath)
         {
+
+            string errorMessage = "Invalid directory specified: " + newPath;
+
             if (Directory.Exists(newPath))
             {
-                return newPath;
+                try
+                {
+                    Directory.GetDirectories(newPath);
+                    return newPath;
+                }
+                catch 
+                {
+                    errorMessage = "Cannot access path, check read permissions: " + newPath;
+                }
             }
-            else
-            {
-                Console.WriteLine($"Invalid directory. {newPath}");
-                return currentDir;
-            }
+
+            Console.WriteLine(errorMessage);
+            return currentDir;
         }
     }
 }
