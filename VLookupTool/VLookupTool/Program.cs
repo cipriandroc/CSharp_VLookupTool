@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using VLookupTool.FileLoaders;
 
 namespace VLookupTool
 {
@@ -8,7 +9,7 @@ namespace VLookupTool
         {
 
             //supported file extensions
-            List<string> fileExtensions = new List<string> { ".csv", ".json", ".xlsx", ".xml" };
+            List<string> fileExtensions = new List<string> { ".csv" };
             
             Console.WriteLine("Select source file for VLOOKUP");
             string fileA = FileManager.Program.Start(fileExtensions);
@@ -26,9 +27,10 @@ namespace VLookupTool
             }
 
             if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
-            { 
+            {
                 //begin processing
-
+                List<Dictionary<string, string>> loadFileA = CSVLoader.Load(fileA);
+                List<Dictionary<string, string>> loadFileB = CSVLoader.Load(fileB);
             }
 
         }

@@ -1,40 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.VisualBasic.FileIO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Microsoft.VisualBasic.FileIO;
 
 namespace VLookupTool.FileLoaders
 {
-    public class CSVLoader
+    public static class CSVLoader
     {
-        public CSVLoader(string fileName) 
-        {
-            using (TextFieldParser parser = new TextFieldParser(fileName))
-            {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
 
-                // Read the headers
+        public static List<Dictionary<string, string>> Load(string path) 
+        {
+
+            return FileToDict(path);
+        }
+
+        public static List<Dictionary<string, string>> FileToDict(string path)
+        {
+            var result = new List<Dictionary<string, string>>();
+
+            using (var parser = new TextFieldParser(path))
+            {
+                parser.CommentTokens = new string[] { "#" };
+                parser.SetDelimiters(new string[] { "," });
+                parser.HasFieldsEnclosedInQuotes = true;
+
                 string[] headers = parser.ReadFields();
 
                 while (!parser.EndOfData)
                 {
-                    // Read a line of data
                     string[] fields = parser.ReadFields();
+                    var dict = new Dictionary<string, string>();
 
-                    // Access the fields by their index or header name
-                    string field1 = fields[0]; // Or: string field1 = fields["Column1"]
-                    int field2 = int.Parse(fields[1]); // Or: int field2 = int.Parse(fields["Column2"])
+                    for (int i = 0; i < headers.Length && i < fields.Length; i++)
+                    {
+                        dict.Add(headers[i], fields[i]);
+                    }
+
+                    result.Add(dict);
                 }
             }
-        }
 
+            return result;
+        }
 
     }
 }
