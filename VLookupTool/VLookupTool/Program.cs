@@ -135,9 +135,7 @@ namespace VLookupTool
 
                 Console.WriteLine($"you selected export location as : {exportLocation}");
 
-                string exportFileLocation = String.Concat(exportLocation, Path.DirectorySeparatorChar, "parsedFile.csv");
-
-                System.IO.File.WriteAllLines(exportFileLocation, parseListOfDictsToStrings);
+                FileManager.Services.FileProcessor.SavePlainFile(exportLocation, "parsedFile.csv", parseListOfDictsToStrings);
 
             }
         }

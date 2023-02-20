@@ -33,5 +33,12 @@
 
             return matchingFiles;
         }
+
+        public static void SavePlainFile(string location, string fileName, List<string> listOfLines)
+        {
+            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, "parsedFile.csv");
+
+            System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
+        }
     }
 }
