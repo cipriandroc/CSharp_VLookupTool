@@ -28,8 +28,8 @@ namespace VLookupTool
             if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
             {
                 //begin processing
-                List<Dictionary<string, string>> loadFileA = CSVFile.Load(fileA);
-                List<Dictionary<string, string>> loadFileB = CSVFile.Load(fileB);
+                List<Dictionary<string, string>> loadFileA = FileManager.Entities.CSVFile.Load(fileA);
+                List<Dictionary<string, string>> loadFileB = FileManager.Entities.CSVFile.Load(fileB);
 
                 List<string> keysFileA = ExtractDictKeys.Execute(loadFileA[0]);
                 List<string> keysFileB = ExtractDictKeys.Execute(loadFileB[0]);
