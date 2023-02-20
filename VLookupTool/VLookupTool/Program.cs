@@ -38,6 +38,7 @@ namespace VLookupTool
                 string columnFileA = StringFromListSelector.GetString(keysFileA, "select match column file A");
                 string columnFileB = StringFromListSelector.GetString(keysFileB, "select match column file B");
                 string neededColumn = StringFromListSelector.GetString(keysFileB, "select needed column from file B");
+                string matchVLOOKUPColumnName = String.Concat("vlookup_", neededColumn);
 
 
                 foreach (Dictionary<string, string> rowA in loadFileA) 
@@ -47,13 +48,14 @@ namespace VLookupTool
                         if (rowA[columnFileA] == rowB[columnFileB])
                         {
                             Console.WriteLine($"found match: {rowB[neededColumn]}");
-                            if (rowA.ContainsKey(neededColumn))
+
+                            if (rowA.ContainsKey(matchVLOOKUPColumnName))
                             {
-                                rowA[neededColumn] = rowB[neededColumn];
+                                rowA[matchVLOOKUPColumnName] = rowB[neededColumn];
                             }
                             else
                             {
-                                rowA.Add(neededColumn, rowB[neededColumn]);
+                                rowA.Add(matchVLOOKUPColumnName, rowB[neededColumn]);
                             }
                         }
                     }
