@@ -14,7 +14,7 @@ namespace FileManager.Entities
 
         public ChildItem() 
         { 
-        
+            
         }
     }
 }
