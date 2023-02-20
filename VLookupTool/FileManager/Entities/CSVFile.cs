@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 
-namespace VLookupTool.FileLoaders
+namespace FileManager.Entities
 {
-    public static class CSVLoader
+    public static class CSVFile
     {
 
-        public static List<Dictionary<string, string>> Load(string path) 
+        public static List<Dictionary<string, string>> Load(string path)
         {
 
             return FileToDict(path);
@@ -38,6 +38,20 @@ namespace VLookupTool.FileLoaders
             }
 
             return result;
+        }
+
+        public static void Save(string location, string fileName, List<string> listOfLines)
+        {
+            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, "parsedFile.csv");
+
+            try
+            {
+                System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
+            }
+            catch
+            {
+                Console.Error.WriteLine("Could not write file to location. Verify permissions/file in use!");
+            }
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using Spectre.Console;
-using VLookupTool.FileLoaders;
 using VLookupTool.Services;
 
 namespace VLookupTool
@@ -29,8 +28,8 @@ namespace VLookupTool
             if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB))) 
             {
                 //begin processing
-                List<Dictionary<string, string>> loadFileA = CSVLoader.Load(fileA);
-                List<Dictionary<string, string>> loadFileB = CSVLoader.Load(fileB);
+                List<Dictionary<string, string>> loadFileA = CSVFile.Load(fileA);
+                List<Dictionary<string, string>> loadFileB = CSVFile.Load(fileB);
 
                 List<string> keysFileA = ExtractDictKeys.Execute(loadFileA[0]);
                 List<string> keysFileB = ExtractDictKeys.Execute(loadFileB[0]);
@@ -135,7 +134,7 @@ namespace VLookupTool
 
                 Console.WriteLine($"you selected export location as : {exportLocation}");
 
-                FileManager.Services.FileProcessor.SavePlainFile(exportLocation, "parsedFile.csv", parseListOfDictsToStrings);
+                FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", parseListOfDictsToStrings);
 
             }
         }
