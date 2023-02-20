@@ -38,7 +38,14 @@
         {
             string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, "parsedFile.csv");
 
-            System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
+            try
+            {
+                System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
+            }
+            catch 
+            {
+                Console.Error.WriteLine("Could not write file to location. Verify permissions/file in use!");
+            }
         }
     }
 }
