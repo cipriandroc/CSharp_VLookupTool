@@ -37,8 +37,28 @@ namespace VLookupTool
 
                 string columnFileA = StringFromListSelector.GetString(keysFileA, "select match column file A");
                 string columnFileB = StringFromListSelector.GetString(keysFileB, "select match column file B");
-                string neededColumn = StringFromListSelector.GetString(keysFileB, "select needed column from file B");
-                string matchVLOOKUPColumnName = String.Concat("vlookup_", neededColumn);
+                //string neededColumn = StringFromListSelector.GetString(keysFileB, "select needed column from file B");
+                //string matchVLOOKUPColumnName = String.Concat("vlookup_", neededColumn);
+
+                List<string> neededColumns = new List<string>();
+                foreach (string key in keysFileB)
+                {
+                    if(key != columnFileB)
+                    {
+                        neededColumns.Add(key);
+                    }
+                }
+
+                var additionalColumns = AnsiConsole.Prompt(
+                    new MultiSelectionPrompt<string>()
+                        .Title("Add any aditional columns from match file?")
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+                        .InstructionsText(
+                            "[grey](Press [blue]<space>[/] to toggle an item, " +
+                            "[green]<enter>[/] to accept)[/]")
+                        .AddChoices(neededColumns)
+                        );
 
 
                 foreach (Dictionary<string, string> rowA in loadFileA) 
@@ -47,15 +67,20 @@ namespace VLookupTool
                     { 
                         if (rowA[columnFileA] == rowB[columnFileB])
                         {
-                            Console.WriteLine($"found match: {rowB[neededColumn]}");
+                            Console.WriteLine($"found match for : {rowB[columnFileA]}");
 
-                            if (rowA.ContainsKey(matchVLOOKUPColumnName))
+                            foreach (string column in neededColumns)
                             {
-                                rowA[matchVLOOKUPColumnName] = rowB[neededColumn];
-                            }
-                            else
-                            {
-                                rowA.Add(matchVLOOKUPColumnName, rowB[neededColumn]);
+                                string concatKeyName = String.Concat("vlookup_", column);
+
+                                if (rowA.ContainsKey(concatKeyName))
+                                {
+                                    rowA[concatKeyName] = rowB[column];
+                                }
+                                else
+                                {
+                                    rowA.Add(concatKeyName, rowB[column]);
+                                }
                             }
                         }
                     }
