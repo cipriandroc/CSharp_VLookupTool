@@ -1,4 +1,4 @@
-﻿namespace VLookupTool.Enums
+﻿namespace FileManager.Enums
 {
     public enum SupportedFileExtensions
     {

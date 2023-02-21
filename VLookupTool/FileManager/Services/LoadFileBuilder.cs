@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VLookupTool.Enums;
+﻿using FileManager.Enums;
 
-namespace VLookupTool.Services
+namespace FileManager.Services
 {
     public static class LoadFileBuilder
     {

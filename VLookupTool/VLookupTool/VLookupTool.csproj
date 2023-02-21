@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="FileLoaders\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>
