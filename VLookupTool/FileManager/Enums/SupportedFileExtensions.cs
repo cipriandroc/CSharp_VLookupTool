@@ -2,7 +2,6 @@
 {
     public enum SupportedFileExtensions
     {
-        csv,
-        json
+        csv
     }
 }

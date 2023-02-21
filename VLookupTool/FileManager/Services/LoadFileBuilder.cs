@@ -12,10 +12,6 @@ namespace FileManager.Services
             {
 
             }
-            if (fileExtension == SupportedFileExtensions.json.ToString())
-            {
-
-            }
         }
 
         private static string GetFileExtension(string fileName)
