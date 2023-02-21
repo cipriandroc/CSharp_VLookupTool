@@ -1,4 +1,4 @@
-﻿namespace VLookupTool.Services
+﻿namespace FileManager.Services
 {
     public static class ExtractDictKeys
     {

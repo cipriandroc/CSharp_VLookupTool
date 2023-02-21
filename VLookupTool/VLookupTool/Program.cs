@@ -28,8 +28,8 @@ namespace VLookupTool
                 List<Dictionary<string, string>> loadFileA = FileManager.Entities.CSVFile.Load(fileA);
                 List<Dictionary<string, string>> loadFileB = FileManager.Entities.CSVFile.Load(fileB);
 
-                List<string> keysFileA = ExtractDictKeys.Execute(loadFileA[0]);
-                List<string> keysFileB = ExtractDictKeys.Execute(loadFileB[0]);
+                List<string> keysFileA = FileManager.Services.ExtractDictKeys.Execute(loadFileA[0]);
+                List<string> keysFileB = FileManager.Services.ExtractDictKeys.Execute(loadFileB[0]);
 
                 string columnFileA = StringFromListSelector.GetString(keysFileA, "select match column file A");
                 string columnFileB = StringFromListSelector.GetString(keysFileB, "select match column file B");
@@ -39,70 +39,14 @@ namespace VLookupTool
                 //build match
                 List<Dictionary<string, string>> vlookupDict = PerformVLookup(loadFileA, loadFileB, columnFileA, columnFileB, additionalColumns);
 
-                //rebuild dict for csv export
-                List<string> newColumnKeys = ExtractDictKeys.Execute(vlookupDict[0]);
-
-                //parse column keys to identify if any contains comma and add double quotes so CSV doesn't split headers
-                List<string> parseNewColumnKeys = ParseCSVColumnsToQuotes(newColumnKeys);
-
-                string header = String.Join(',', parseNewColumnKeys);
-
-                List<string> parseListOfDictsToStrings = new List<string>();
-                parseListOfDictsToStrings.Add(header);
-
-                ParseCSVDictLinesToQuotes(vlookupDict);
-
-                //add dict values to list 
-                foreach (Dictionary<string, string> rowA in vlookupDict)
-                {
-                    parseListOfDictsToStrings.Add(String.Join(',', rowA.Values));
-                }
-
                 //export
                 Console.WriteLine("Select export file location");
                 string exportLocation = FileManager.Program.Start(true);
 
                 Console.WriteLine($"you selected export location as : {exportLocation}");
 
-                FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", parseListOfDictsToStrings);
+                FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", vlookupDict);
             }
-        }
-
-        private static void ParseCSVDictLinesToQuotes(List<Dictionary<string, string>> loadFileA)
-        {
-            //parse list of dicts and add double quotes for any value that contains comma so CSV doesn't split column order
-            foreach (Dictionary<string, string> rowA in loadFileA)
-            {
-                foreach (string key in rowA.Keys)
-                {
-                    if (rowA[key].Contains(','))
-                    {
-                        rowA[key] = '"' + rowA[key] + '"';
-                    }
-                }
-            }
-        }
-
-        private static List<string> ParseCSVColumnsToQuotes(List<string> newColumnKeys)
-        {
-            List<string> parseNewColumnKeys = new List<string>();
-            foreach (string key in newColumnKeys)
-            {
-                string parseKey;
-
-                if (key.Contains(','))
-                {
-                    parseKey = '"' + key + '"';
-                }
-                else
-                {
-                    parseKey = key;
-                }
-
-                parseNewColumnKeys.Add(parseKey);
-            }
-
-            return parseNewColumnKeys;
         }
 
         private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
