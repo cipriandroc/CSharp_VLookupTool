@@ -37,12 +37,10 @@ namespace VLookupTool
                 List<string> additionalColumns = GetAdditionalColumns(keysFileB, columnFileB);
 
                 //build match
-
-                PerformVLookup(loadFileA, loadFileB, columnFileA, columnFileB, additionalColumns);
+                List<Dictionary<string, string>> vlookupDict = PerformVLookup(loadFileA, loadFileB, columnFileA, columnFileB, additionalColumns);
 
                 //rebuild dict for csv export
-
-                List<string> newColumnKeys = ExtractDictKeys.Execute(loadFileA[0]);
+                List<string> newColumnKeys = ExtractDictKeys.Execute(vlookupDict[0]);
 
                 //parse column keys to identify if any contains comma and add double quotes so CSV doesn't split headers
                 List<string> parseNewColumnKeys = ParseCSVColumnsToQuotes(newColumnKeys);
@@ -52,24 +50,21 @@ namespace VLookupTool
                 List<string> parseListOfDictsToStrings = new List<string>();
                 parseListOfDictsToStrings.Add(header);
 
-                ParseCSVDictLinesToQuotes(loadFileA);
+                ParseCSVDictLinesToQuotes(vlookupDict);
 
                 //add dict values to list 
-                foreach (Dictionary<string, string> rowA in loadFileA)
+                foreach (Dictionary<string, string> rowA in vlookupDict)
                 {
                     parseListOfDictsToStrings.Add(String.Join(',', rowA.Values));
                 }
-
 
                 //export
                 Console.WriteLine("Select export file location");
                 string exportLocation = FileManager.Program.Start(true);
 
-
                 Console.WriteLine($"you selected export location as : {exportLocation}");
 
                 FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", parseListOfDictsToStrings);
-
             }
         }
 
@@ -110,10 +105,14 @@ namespace VLookupTool
             return parseNewColumnKeys;
         }
 
-        private static void PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
+        private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
         {
+            List<Dictionary<string, string>> resultList = new List<Dictionary<string, string>>();
+
             foreach (Dictionary<string, string> rowA in loadFileA)
             {
+                Dictionary<string, string> resultRow = new Dictionary<string, string>(rowA);
+
                 foreach (Dictionary<string, string> rowB in loadFileB)
                 {
                     if (rowA[columnFileA] != rowB[columnFileB])
@@ -127,17 +126,21 @@ namespace VLookupTool
                     {
                         string concatKeyName = String.Concat("vlookup_", column);
 
-                        if (rowA.ContainsKey(concatKeyName))
+                        if (resultRow.ContainsKey(concatKeyName))
                         {
-                            rowA[concatKeyName] = rowB[column];
+                            resultRow[concatKeyName] = rowB[column];
                         }
                         else
                         {
-                            rowA.Add(concatKeyName, rowB[column]);
+                            resultRow.Add(concatKeyName, rowB[column]);
                         }
                     }
                 }
+
+                resultList.Add(resultRow);
             }
+
+            return resultList;
         }
 
         private static List<string> GetAdditionalColumns(List<string> keysFileB, string columnFileB)
