@@ -1,5 +1,6 @@
 ﻿using FileManager.Enums;
 using FileManager.Services;
+using Spectre.Console;
 
 namespace FileManager
 {
@@ -12,7 +13,16 @@ namespace FileManager
 
             List<string> fileExtensions = GetSupportedFileExtensions();
 
-            return Manager.Start(fileExtensions, DirectorySelector);
+            string filePath =  Manager.Start(fileExtensions, DirectorySelector);
+
+            if (String.IsNullOrEmpty(filePath))
+            {
+                throw new Exception("No selection made");
+            }
+
+            AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
+
+            return filePath;
         }
 
         private static List<string> GetSupportedFileExtensions()

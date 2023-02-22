@@ -10,43 +10,35 @@ namespace VLookupTool
 
             Console.WriteLine("Select source file for VLOOKUP");
             string fileA = FileManager.Program.Start(false);
-            if (!String.IsNullOrEmpty(fileA))
-            {
-                AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileA}[/]" + "\n"));
-            }
+
 
             Console.WriteLine("Select target file for VLOOKUP");
             string fileB = FileManager.Program.Start(false);
-            if (!String.IsNullOrEmpty(fileB))
-            {
-                AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{fileB}[/]" + "\n"));
-            }
 
-            if ((!String.IsNullOrEmpty(fileA)) && (!String.IsNullOrEmpty(fileB)))
-            {
-                //begin processing
-                List<Dictionary<string, string>> loadFileA = FileManager.Entities.CSVFile.Load(fileA);
-                List<Dictionary<string, string>> loadFileB = FileManager.Entities.CSVFile.Load(fileB);
 
-                List<string> keysFileA = FileManager.Services.ExtractDictKeys.Execute(loadFileA[0]);
-                List<string> keysFileB = FileManager.Services.ExtractDictKeys.Execute(loadFileB[0]);
+            //begin processing
+            List<Dictionary<string, string>> loadFileA = FileManager.Entities.CSVFile.Load(fileA);
+            List<Dictionary<string, string>> loadFileB = FileManager.Entities.CSVFile.Load(fileB);
 
-                string columnFileA = StringFromListSelector.GetString(keysFileA, "select match column file A");
-                string columnFileB = StringFromListSelector.GetString(keysFileB, "select match column file B");
+            List<string> keysFileA = FileManager.Services.ExtractDictKeys.Execute(loadFileA[0]);
+            List<string> keysFileB = FileManager.Services.ExtractDictKeys.Execute(loadFileB[0]);
 
-                List<string> additionalColumns = GetAdditionalColumns(keysFileB, columnFileB);
+            string columnFileA = StringFromListSelector.GetString(keysFileA, "select match column file A");
+            string columnFileB = StringFromListSelector.GetString(keysFileB, "select match column file B");
 
-                //build match
-                List<Dictionary<string, string>> vlookupDict = PerformVLookup(loadFileA, loadFileB, columnFileA, columnFileB, additionalColumns);
+            List<string> additionalColumns = GetAdditionalColumns(keysFileB, columnFileB);
 
-                //export
-                Console.WriteLine("Select export file location");
-                string exportLocation = FileManager.Program.Start(true);
+            //build match
+            List<Dictionary<string, string>> vlookupDict = PerformVLookup(loadFileA, loadFileB, columnFileA, columnFileB, additionalColumns);
 
-                Console.WriteLine($"you selected export location as : {exportLocation}");
+            //export
+            Console.WriteLine("Select export file location");
+            string exportLocation = FileManager.Program.Start(true);
 
-                FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", vlookupDict);
-            }
+            Console.WriteLine($"you selected export location as : {exportLocation}");
+
+            FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", vlookupDict);
+            
         }
 
         private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
