@@ -6,14 +6,11 @@ namespace FileManager
 {
     public class Program
     {
-
-        public static string Start(bool DirectorySelector)
+        public static List<Dictionary<string, string>> FileLoader()
         {
-            //todo implement directory passing
-
             List<string> fileExtensions = GetSupportedFileExtensions();
 
-            string filePath =  Manager.Start(fileExtensions, DirectorySelector);
+            string filePath =  Manager.Start(fileExtensions, false);
 
             if (String.IsNullOrEmpty(filePath))
             {
@@ -22,7 +19,16 @@ namespace FileManager
 
             AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
 
-            return filePath;
+            List<Dictionary<string, string>> loadFile = FileManager.Entities.CSVFile.Load(filePath);
+
+            return loadFile;
+        }
+
+        public static string DirectorySelector()
+        {
+            List<string> fileExtensions = GetSupportedFileExtensions();
+
+            return Manager.Start(fileExtensions, true);
         }
 
         private static List<string> GetSupportedFileExtensions()
