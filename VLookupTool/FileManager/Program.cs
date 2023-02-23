@@ -25,9 +25,7 @@ namespace FileManager
 
         public static string DirectorySelector()
         {
-            List<string> fileExtensions = GetSupportedFileExtensions();
-
-            return Manager.Start(fileExtensions, true);
+            return Manager.Start(new List<string> {  }, true);
         }
 
         private static List<string> GetSupportedFileExtensions()
