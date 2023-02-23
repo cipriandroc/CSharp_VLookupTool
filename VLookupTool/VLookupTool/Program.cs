@@ -9,29 +9,22 @@ namespace VLookupTool
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Select source file for VLOOKUP");
+            Console.WriteLine("Select source data(A) for VLOOKUP");
             DataObject dataA = new DataObject(FileManager.Program.FileLoader());
 
-            Console.WriteLine("Select target file for VLOOKUP");
+            Console.WriteLine("Select target data(B) for VLOOKUP");
             DataObject dataB = new DataObject(FileManager.Program.FileLoader());
 
             //begin processing
-            string columnFileA = StringFromListSelector.GetString(dataA.DictionaryKeys, "select match column file A");
-            string columnFileB = StringFromListSelector.GetString(dataB.DictionaryKeys, "select match column file B");
+            string columnDataA = StringFromListSelector.GetString(dataA.DictionaryKeys, "select match column data A");
+            string columnDataB = StringFromListSelector.GetString(dataB.DictionaryKeys, "select match column data B");
 
-            List<string> additionalColumns = GetAdditionalColumns(dataB.DictionaryKeys, columnFileB);
+            List<string> additionalColumns = GetAdditionalColumns(dataB.DictionaryKeys, columnDataB);
 
             //build match
-            List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnFileA, columnFileB, additionalColumns);
+            List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
 
-            //export
-            Console.WriteLine("Select export file location");
-            string exportLocation = FileManager.Program.DirectorySelector();
-
-            Console.WriteLine($"you selected export location as : {exportLocation}");
-
-            FileManager.Entities.CSVFile.Save(exportLocation, "parsedFile.csv", vlookupDict);
-
+            FileManager.Program.SaveFile(vlookupDict);
         }
 
         private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)

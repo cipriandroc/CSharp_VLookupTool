@@ -1,5 +1,6 @@
 ﻿using FileManager.Enums;
 using FileManager.Services;
+using FileManager.Entities;
 using Spectre.Console;
 
 namespace FileManager
@@ -41,6 +42,18 @@ namespace FileManager
             }
 
             return fileExtensions;
+        }
+
+        public static void SaveFile(List<Dictionary<string, string>> vlookupDict)
+        {
+            Console.WriteLine("Select export file location");
+            string exportLocation = DirectorySelector();
+
+            Console.WriteLine($"You selected export location as : {exportLocation}");
+
+            string fileName = "parsedFile.csv";
+
+            CSVFile.Save(exportLocation, fileName, vlookupDict);
         }
     }
 }
