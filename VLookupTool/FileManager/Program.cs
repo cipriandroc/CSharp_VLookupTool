@@ -20,9 +20,7 @@ namespace FileManager
 
             AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
 
-            List<Dictionary<string, string>> loadFile = FileManager.Entities.CSVFile.Load(filePath);
-
-            return loadFile;
+            return LoadFileBuilder.Load(filePath);
         }
 
         public static string DirectorySelector()

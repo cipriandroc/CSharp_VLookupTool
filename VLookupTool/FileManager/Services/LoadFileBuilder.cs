@@ -1,17 +1,20 @@
-﻿using FileManager.Enums;
+﻿using FileManager.Entities;
+using FileManager.Enums;
 
 namespace FileManager.Services
 {
     public static class LoadFileBuilder
     {
-        public static void Input(string fileName)
+        public static List<Dictionary<string, string>> Load(string fileName)
         {
             string fileExtension = GetFileExtension(fileName);
 
             if (fileExtension == SupportedFileExtensions.csv.ToString())
             {
-
+                return CSVFile.Load(fileName);
             }
+
+            throw new Exception("unhandled file type detected");
         }
 
         private static string GetFileExtension(string fileName)
