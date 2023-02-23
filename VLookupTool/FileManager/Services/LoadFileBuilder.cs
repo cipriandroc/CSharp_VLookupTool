@@ -13,6 +13,10 @@ namespace FileManager.Services
             {
                 return CSVFile.Load(fileName);
             }
+            if (fileExtension == SupportedFileExtensions.xlsx.ToString())
+            {
+                return ExcelFile.Load(fileName);
+            }
 
             throw new Exception("unhandled file type detected");
         }
