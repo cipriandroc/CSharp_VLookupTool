@@ -25,6 +25,7 @@ namespace VLookupTool
 
             //build match
             List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
+            Console.WriteLine("Match complete!");
 
             fileManager.SaveFile(vlookupDict);
         }
@@ -43,8 +44,6 @@ namespace VLookupTool
                     {
                         continue;
                     }
-
-                    Console.WriteLine($"found match for : {rowB[columnFileA]}");
 
                     foreach (string column in additionalColumns)
                     {
