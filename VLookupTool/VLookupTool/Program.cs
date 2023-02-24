@@ -8,7 +8,7 @@ namespace VLookupTool
     {
         static void Main(string[] args)
         {
-            
+
             FileManager.Program fileManager = new FileManager.Program();
 
             Console.WriteLine("Select source data(A) for VLOOKUP");
@@ -24,11 +24,23 @@ namespace VLookupTool
             List<string> additionalColumns = GetAdditionalColumns(dataB.DictionaryKeys, columnDataB);
 
             //build match
-            List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
+            List<Dictionary<string, string>> vlookupDict = DisplayPerformTaskToConsole(dataA, dataB, columnDataA, columnDataB, additionalColumns);
+
             Console.WriteLine("Match complete! Below is a sample of matched values");
             ResultsTable.Preview(vlookupDict);
 
             fileManager.SaveFile(vlookupDict);
+        }
+
+        private static List<Dictionary<string, string>> DisplayPerformTaskToConsole(DataObject dataA, DataObject dataB, string columnDataA, string columnDataB, List<string> additionalColumns)
+        {
+            List<Dictionary<string, string>> vlookupDict = new List<Dictionary<string, string>>();
+            AnsiConsole.Status()
+            .Start("Performing match...", ctx =>
+            {
+                vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
+            });
+            return vlookupDict;
         }
 
         private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
