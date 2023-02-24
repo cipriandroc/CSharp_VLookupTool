@@ -8,7 +8,7 @@ namespace VLookupTool
     {
         static void Main(string[] args)
         {
-
+            
             FileManager.Program fileManager = new FileManager.Program();
 
             Console.WriteLine("Select source data(A) for VLOOKUP");
@@ -25,7 +25,8 @@ namespace VLookupTool
 
             //build match
             List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
-            Console.WriteLine("Match complete!");
+            Console.WriteLine("Match complete! Below is a sample of matched values");
+            ResultsTable.Preview(vlookupDict);
 
             fileManager.SaveFile(vlookupDict);
         }
