@@ -40,7 +40,7 @@ namespace FileManager.Services
             List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
 
             List<string> optionList = new List<string>
-                    { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.CurrentPath.ToString(), ConsoleOptions.exit.ToString() };
+                    { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.CurrentPath.ToString(), ConsoleOptions.GoToRoot.ToString(), ConsoleOptions.exit.ToString() };
 
             if (DirectorySelector)
             {

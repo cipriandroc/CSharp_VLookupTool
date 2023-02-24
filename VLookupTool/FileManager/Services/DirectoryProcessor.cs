@@ -21,6 +21,12 @@ namespace FileManager.Services
 
                 return newPath;
             }
+            else if (input == ConsoleOptions.GoToRoot.ToString())
+            {
+                newPath = Path.GetPathRoot(Directory.GetCurrentDirectory());
+
+                return newPath;
+            }
             else
             {
                 // check if the input is a valid directory

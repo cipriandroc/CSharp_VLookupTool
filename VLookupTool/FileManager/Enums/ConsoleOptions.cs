@@ -5,6 +5,7 @@
         options,
         UpOneLevel,
         CurrentPath,
+        GoToRoot,
         SelectDirectory,
         exit
     }
