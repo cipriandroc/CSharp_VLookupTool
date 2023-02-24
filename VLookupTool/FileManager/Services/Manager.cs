@@ -40,7 +40,7 @@ namespace FileManager.Services
             List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
 
             List<string> optionList = new List<string>
-                    { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.exit.ToString() };
+                    { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.CurrentPath.ToString(), ConsoleOptions.exit.ToString() };
 
             if (DirectorySelector)
             {
@@ -73,7 +73,8 @@ namespace FileManager.Services
         {
             if (input == ConsoleOptions.exit.ToString())
             {
-                return true;
+                Console.WriteLine("Application terminated.");
+                Environment.Exit(0);
             }
 
             return false;

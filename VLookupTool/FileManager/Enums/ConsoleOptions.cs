@@ -4,6 +4,7 @@
     {
         options,
         UpOneLevel,
+        CurrentPath,
         SelectDirectory,
         exit
     }

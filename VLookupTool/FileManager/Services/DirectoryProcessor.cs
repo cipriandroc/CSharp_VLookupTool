@@ -15,6 +15,12 @@ namespace FileManager.Services
 
                 return CheckValidDirectory(currentDir, newPath);
             }
+            else if (input == ConsoleOptions.CurrentPath.ToString())
+            {
+                newPath = Directory.GetCurrentDirectory();
+
+                return newPath;
+            }
             else
             {
                 // check if the input is a valid directory
