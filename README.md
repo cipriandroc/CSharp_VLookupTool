@@ -18,3 +18,4 @@ To use the VLookupTool application, follow these steps:
 
 Note: VLookupTool currently only supports CSV files, but support for other data file formats is planned for future versions.
 
+The repository contains fileA.csv and fileB.csv to serve as sample data.
