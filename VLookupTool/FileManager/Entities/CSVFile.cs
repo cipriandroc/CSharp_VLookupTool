@@ -43,12 +43,15 @@ namespace FileManager.Entities
 
         public static void Save(string location, string fileName, List<Dictionary<string, string>> exportDict)
         {
-            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, "parsedFile.csv");
+            fileName = CheckExistingFile.GetExisitingFileIncremenet(location, fileName, "csv");
+
+            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, fileName);
 
             List<string> listOfLines = PrepFileForExport(exportDict);
 
             try
             {
+                Console.WriteLine($"writing file {fileName} to location {exportFileLocation}");
                 System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
             }
             catch

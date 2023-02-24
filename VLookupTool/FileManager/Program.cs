@@ -62,7 +62,9 @@ namespace FileManager
 
             Console.WriteLine($"You selected export location as : {exportLocation}");
 
-            string fileName = "parsedFile.csv";
+            string thisDay = String.Join(".", ((DateTime.Today).ToString("d")).Split("/").SkipLast(1));
+
+            string fileName = String.Concat(thisDay,"_","parsedFile");
 
             CSVFile.Save(exportLocation, fileName, vlookupDict);
         }
