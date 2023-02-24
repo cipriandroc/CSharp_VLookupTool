@@ -5,10 +5,9 @@ namespace FileManager.Services
 {
     public class Manager
     {
-        public static string Start(List<string> fileExtensions, bool DirectorySelector)
+        public static string Start(List<string> fileExtensions, bool DirectorySelector, string currentDir)
         {
             string getFile;
-            string currentDir = Path.GetPathRoot(Directory.GetCurrentDirectory());
             bool exit = false;
 
             while (!exit)

@@ -5,13 +5,21 @@ using Spectre.Console;
 
 namespace FileManager
 {
+
     public class Program
     {
-        public static List<Dictionary<string, string>> FileLoader()
+        private string LastPath { get; set; }
+
+        public Program() 
+        {
+            LastPath = Path.GetPathRoot(Directory.GetCurrentDirectory());
+        }
+
+        public List<Dictionary<string, string>> FileLoader()
         {
             List<string> fileExtensions = GetSupportedFileExtensions();
 
-            string filePath =  Manager.Start(fileExtensions, false);
+            string filePath =  Manager.Start(fileExtensions, false, LastPath);
 
             if (String.IsNullOrEmpty(filePath))
             {
@@ -23,9 +31,9 @@ namespace FileManager
             return LoadFileBuilder.Load(filePath);
         }
 
-        public static string DirectorySelector()
+        public string DirectorySelector()
         {
-            return Manager.Start(new List<string> {  }, true);
+            return Manager.Start(new List<string> {  }, true, LastPath);
         }
 
         private static List<string> GetSupportedFileExtensions()
@@ -40,7 +48,7 @@ namespace FileManager
             return fileExtensions;
         }
 
-        public static void SaveFile(List<Dictionary<string, string>> vlookupDict)
+        public void SaveFile(List<Dictionary<string, string>> vlookupDict)
         {
             Console.WriteLine("Select export file location");
             string exportLocation = DirectorySelector();

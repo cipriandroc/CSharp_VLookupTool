@@ -9,11 +9,13 @@ namespace VLookupTool
         static void Main(string[] args)
         {
 
+            FileManager.Program fileManager = new FileManager.Program();
+
             Console.WriteLine("Select source data(A) for VLOOKUP");
-            DataObject dataA = new DataObject(FileManager.Program.FileLoader());
+            DataObject dataA = new DataObject(fileManager.FileLoader());
 
             Console.WriteLine("Select target data(B) for VLOOKUP");
-            DataObject dataB = new DataObject(FileManager.Program.FileLoader());
+            DataObject dataB = new DataObject(fileManager.FileLoader());
 
             //begin processing
             string columnDataA = StringFromListSelector.GetString(dataA.DictionaryKeys, "select match column data A");
@@ -24,7 +26,7 @@ namespace VLookupTool
             //build match
             List<Dictionary<string, string>> vlookupDict = PerformVLookup(dataA._data, dataB._data, columnDataA, columnDataB, additionalColumns);
 
-            FileManager.Program.SaveFile(vlookupDict);
+            fileManager.SaveFile(vlookupDict);
         }
 
         private static List<Dictionary<string, string>> PerformVLookup(List<Dictionary<string, string>> loadFileA, List<Dictionary<string, string>> loadFileB, string columnFileA, string columnFileB, List<string> additionalColumns)
