@@ -2,6 +2,7 @@
 using FileManager.Services;
 using FileManager.Entities;
 using Spectre.Console;
+using System.IO;
 
 namespace FileManager
 {
@@ -26,6 +27,8 @@ namespace FileManager
                 throw new Exception("No selection made");
             }
 
+            LastPath = ExtractFolderFromFilePath(filePath);
+
             AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
 
             return LoadFileBuilder.Load(filePath);
@@ -33,7 +36,11 @@ namespace FileManager
 
         public string DirectorySelector()
         {
-            return Manager.Start(new List<string> {  }, true, LastPath);
+            string getDirectory = Manager.Start(new List<string> { }, true, LastPath);
+
+            LastPath = getDirectory;
+
+            return getDirectory;
         }
 
         private static List<string> GetSupportedFileExtensions()
@@ -58,6 +65,14 @@ namespace FileManager
             string fileName = "parsedFile.csv";
 
             CSVFile.Save(exportLocation, fileName, vlookupDict);
+        }
+
+        private static string ExtractFolderFromFilePath(string filePath)
+        {
+            string[] splitPath = filePath.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
+            string newPath = String.Join(Path.DirectorySeparatorChar, splitPath);
+
+            return newPath;
         }
     }
 }
