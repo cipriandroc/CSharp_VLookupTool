@@ -66,7 +66,7 @@ namespace FileManager
 
             string fileName = String.Concat(thisDay,"_","parsedFile");
 
-            CSVFile.Save(exportLocation, fileName, vlookupDict);
+            ExcelFile.Save(exportLocation, fileName, vlookupDict);
         }
 
         private static string ExtractFolderFromFilePath(string filePath)
