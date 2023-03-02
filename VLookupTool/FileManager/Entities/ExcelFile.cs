@@ -10,34 +10,41 @@ namespace FileManager.Entities
         public static List<Dictionary<string, string>> Load(string path)
         {
 
-            TestExcel(path);
             return FileToDict(path);
         }
 
         public static List<Dictionary<string, string>> FileToDict(string path)
         {
-            List<Dictionary<string, string>> placeholder =
-                new List<Dictionary<string, string>> { new Dictionary<string, string>() };
+            var result = new List<Dictionary<string, string>>();
 
-            return placeholder;
-        }
-
-        static void TestExcel(string path)
-        {
             FileInfo fileInfo = new FileInfo(path);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             using (ExcelPackage package = new ExcelPackage(fileInfo))
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
-                for (int row = 1; row <= worksheet.Dimension.Rows; row++)
+                // Read the headers from the first row of the worksheet
+                int headerRow = 1;
+                var headers = new List<string>();
+                for (int col = 1; col <= worksheet.Dimension.Columns; col++)
                 {
+                    headers.Add(worksheet.Cells[headerRow, col].Value.ToString());
+                }
+
+                // Read the data from the remaining rows of the worksheet
+                for (int row = 2; row <= worksheet.Dimension.Rows; row++)
+                {
+                    var dict = new Dictionary<string, string>();
                     for (int col = 1; col <= worksheet.Dimension.Columns; col++)
                     {
-                        Console.Write(worksheet.Cells[row, col].Value.ToString() + "\t");
+                        dict.Add(headers[col - 1], worksheet.Cells[row, col].Value.ToString());
                     }
-                    Console.WriteLine();
+                    result.Add(dict);
                 }
             }
+
+            return result;
         }
     }
 }
