@@ -57,6 +57,20 @@ namespace FileManager
 
         public void SaveFile(List<Dictionary<string, string>> vlookupDict)
         {
+            Console.WriteLine();
+
+            List<string> tempExportFileTypes = GetSupportedFileExtensions();
+
+            var input = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[grey]Select export file type:[/]")
+                    .PageSize(15)
+                    .AddChoices(tempExportFileTypes)
+                    );
+
+            //implement translation from input to return interface for saving file from method
+            //from export file builder class
+
             Console.WriteLine("Select export file location");
             string exportLocation = DirectorySelector();
 
