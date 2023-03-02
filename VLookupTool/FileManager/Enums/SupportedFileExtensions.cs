@@ -2,6 +2,8 @@
 {
     public enum SupportedFileExtensions
     {
-        csv
+        csv,
+        xls,
+        xlsx
     }
 }
