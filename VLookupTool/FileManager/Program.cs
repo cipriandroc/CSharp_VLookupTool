@@ -2,7 +2,6 @@
 using FileManager.Services;
 using FileManager.Entities;
 using Spectre.Console;
-using System.IO;
 
 namespace FileManager
 {
