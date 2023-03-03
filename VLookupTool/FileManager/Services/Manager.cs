@@ -7,23 +7,20 @@ namespace FileManager.Services
     {
         public static string Start(List<string> fileExtensions, bool DirectorySelector, string currentDir)
         {
-            string getFile;
-            bool exit = false;
-
-            while (!exit)
+            while (true)
             {
                 string input = DisplayLocationContents(fileExtensions, currentDir, DirectorySelector);
 
-                if(ContinueLoop(input))
+                if (input == ConsoleOptions.exit.ToString())
                 {
-                    break;
+                    Environment.Exit(0);
                 }
 
-                getFile = FileProcessor.Get(currentDir, input);
+                string selectedFile = FileProcessor.Get(currentDir, input);
 
-                if (!String.IsNullOrEmpty(getFile))
+                if (!String.IsNullOrEmpty(selectedFile))
                 {
-                    return getFile;
+                    return selectedFile;
                 }
                 if (DirectorySelector && input == ConsoleOptions.SelectDirectory.ToString())
                 {
@@ -32,8 +29,6 @@ namespace FileManager.Services
 
                 currentDir = DirectoryProcessor.Get(currentDir, input);
             }
-
-            return null;
         }
         private static string DisplayLocationContents(List<string> fileExtensions, string currentDir, bool DirectorySelector)
         {
@@ -67,17 +62,6 @@ namespace FileManager.Services
 
             directories.AddRange(FileProcessor.GetFilesByExtensions(currentDir, fileExtensions));
             return directories;
-        }
-
-        private static bool ContinueLoop(string input)
-        {
-            if (input == ConsoleOptions.exit.ToString())
-            {
-                Console.WriteLine("Application terminated.");
-                Environment.Exit(0);
-            }
-
-            return false;
         }
 
     }

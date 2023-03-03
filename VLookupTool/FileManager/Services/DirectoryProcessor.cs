@@ -15,25 +15,24 @@ namespace FileManager.Services
 
                 return CheckValidDirectory(currentDir, newPath);
             }
-            else if (input == ConsoleOptions.CurrentPath.ToString())
+            
+            if (input == ConsoleOptions.CurrentPath.ToString())
             {
                 newPath = Directory.GetCurrentDirectory();
 
                 return newPath;
             }
-            else if (input == ConsoleOptions.GoToRoot.ToString())
+            if (input == ConsoleOptions.GoToRoot.ToString())
             {
                 newPath = Path.GetPathRoot(Directory.GetCurrentDirectory());
 
                 return newPath;
             }
-            else
-            {
-                // check if the input is a valid directory
-                newPath = Path.Combine(currentDir, input);
 
-                return CheckValidDirectory(currentDir, newPath);
-            }
+            newPath = Path.Combine(currentDir, input);
+
+            return CheckValidDirectory(currentDir, newPath);
+
         }
 
         private static string GetPreviousDirectory(string currentDir)
