@@ -18,7 +18,7 @@ namespace FileManager
 
         public List<Dictionary<string, string>> FileLoader()
         {
-            List<string> fileExtensions = GetSupportedFileExtensions();
+            List<string> fileExtensions = GetSupportedImportFileExtensions();
 
             string filePath =  Manager.Start(fileExtensions, false, LastPath);
 
@@ -43,10 +43,22 @@ namespace FileManager
             return getDirectory;
         }
 
-        private static List<string> GetSupportedFileExtensions()
+        private static List<string> GetSupportedImportFileExtensions()
         {
             List<string> fileExtensions = new List<string>();
-            foreach (SupportedFileExtensions fileExtension in (SupportedFileExtensions[])Enum.GetValues(typeof(SupportedFileExtensions)))
+            foreach (SupportedImportFileExtensions fileExtension in (SupportedImportFileExtensions[])Enum.GetValues(typeof(SupportedImportFileExtensions)))
+            {
+                string convertToString = fileExtension.ToString();
+                fileExtensions.Add((String.Concat('.', convertToString)));
+            }
+
+            return fileExtensions;
+        }
+
+        private static List<string> GetSupportedExportFileExtensions()
+        {
+            List<string> fileExtensions = new List<string>();
+            foreach (SupportedExportFileExtensions fileExtension in (SupportedExportFileExtensions[])Enum.GetValues(typeof(SupportedExportFileExtensions)))
             {
                 string convertToString = fileExtension.ToString();
                 fileExtensions.Add((String.Concat('.', convertToString)));
@@ -59,7 +71,7 @@ namespace FileManager
         {
             Console.WriteLine();
 
-            List<string> tempExportFileTypes = GetSupportedFileExtensions();
+            List<string> tempExportFileTypes = GetSupportedExportFileExtensions();
 
             var input = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()

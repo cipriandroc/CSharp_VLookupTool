@@ -9,15 +9,15 @@ namespace FileManager.Services
         {
             string fileExtension = GetFileExtension(fileName);
 
-            if (fileExtension == SupportedFileExtensions.csv.ToString())
+            if (fileExtension == SupportedImportFileExtensions.csv.ToString())
             {
                 return CSVFile.Load(fileName);
             }
-            if (fileExtension == SupportedFileExtensions.xls.ToString())
+            if (fileExtension == SupportedImportFileExtensions.xls.ToString())
             {
                 return ExcelFile.Load(fileName);
             }
-            if (fileExtension == SupportedFileExtensions.xlsx.ToString())
+            if (fileExtension == SupportedImportFileExtensions.xlsx.ToString())
             {
                 return ExcelFile.Load(fileName);
             }

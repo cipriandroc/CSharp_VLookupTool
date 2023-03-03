@@ -1,6 +1,6 @@
 ﻿namespace FileManager.Enums
 {
-    public enum SupportedFileExtensions
+    public enum SupportedImportFileExtensions
     {
         csv,
         xls,
