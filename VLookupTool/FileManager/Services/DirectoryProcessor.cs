@@ -22,6 +22,7 @@ namespace FileManager.Services
 
                 return newPath;
             }
+
             if (input == ConsoleOptions.GoToRoot.ToString())
             {
                 newPath = Path.GetPathRoot(Directory.GetCurrentDirectory());
