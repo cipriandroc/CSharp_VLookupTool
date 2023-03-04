@@ -8,25 +8,25 @@ namespace FileManager
 
     public class Program
     {
-        private string LastPath { get; set; }
+        private string Path { get; set; }
 
         public Program() 
         {
-            LastPath = Path.GetPathRoot(Directory.GetCurrentDirectory());
+            Path = System.IO.Path.GetPathRoot(Directory.GetCurrentDirectory());
         }
 
         public List<Dictionary<string, string>> FileLoader()
         {
             List<string> fileExtensions = GetSupportedImportFileExtensions();
 
-            string filePath =  Manager.Start(fileExtensions, false, LastPath);
+            string filePath =  Manager.Start(fileExtensions, false, Path);
 
             if (String.IsNullOrEmpty(filePath))
             {
                 throw new Exception("No selection made");
             }
 
-            LastPath = ExtractFolderFromFilePath(filePath);
+            Path = ExtractFolderFromFilePath(filePath);
 
             AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
 
@@ -35,9 +35,9 @@ namespace FileManager
 
         public string DirectorySelector()
         {
-            string getDirectory = Manager.Start(new List<string> { }, true, LastPath);
+            string getDirectory = Manager.Start(new List<string> { }, true, Path);
 
-            LastPath = getDirectory;
+            Path = getDirectory;
 
             return getDirectory;
         }
@@ -97,7 +97,7 @@ namespace FileManager
         private static string ExtractFolderFromFilePath(string filePath)
         {
             string[] splitPath = filePath.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
-            string newPath = String.Join(Path.DirectorySeparatorChar, splitPath);
+            string newPath = string.Join(System.IO.Path.DirectorySeparatorChar, splitPath);
 
             return newPath;
         }
