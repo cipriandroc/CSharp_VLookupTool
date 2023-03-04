@@ -3,10 +3,6 @@
     public static class CheckExistingFile
     {
 
-        private static string SetFileNameExtension(string fileName, string fileType) 
-        {
-            return String.Concat(fileName, '.', fileType);
-        }
         public static string GetExisitingFileIncremenet(string directory, string fileName, string fileType) 
         {
 
@@ -31,6 +27,10 @@
             }
 
             return fullFileName;
+        }
+        private static string SetFileNameExtension(string fileName, string fileType)
+        {
+            return String.Concat(fileName, '.', fileType);
         }
     }
 }
