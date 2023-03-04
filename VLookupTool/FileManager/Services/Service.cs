@@ -64,6 +64,5 @@ namespace FileManager.Services
             directories.AddRange(FileProcessor.GetFilesByExtensions(currentDir, fileExtensions));
             return directories;
         }
-
     }
 }
