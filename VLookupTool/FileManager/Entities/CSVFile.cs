@@ -11,7 +11,24 @@ namespace FileManager.Entities
 
             return FileContentsToDict(path);
         }
+        public static void Save(string location, string fileName, List<Dictionary<string, string>> exportDict)
+        {
+            fileName = CheckExistingFile.GetExisitingFileIncremenet(location, fileName, "csv");
 
+            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, fileName);
+
+            List<string> listOfLines = PrepFileForExport(exportDict);
+
+            try
+            {
+                Console.WriteLine($"writing file {fileName} to location {exportFileLocation}");
+                System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
+            }
+            catch
+            {
+                Console.Error.WriteLine("Could not write file to location. Verify permissions/file in use!");
+            }
+        }
         public static List<Dictionary<string, string>> FileContentsToDict(string path)
         {
             var result = new List<Dictionary<string, string>>();
@@ -40,26 +57,6 @@ namespace FileManager.Entities
 
             return result;
         }
-
-        public static void Save(string location, string fileName, List<Dictionary<string, string>> exportDict)
-        {
-            fileName = CheckExistingFile.GetExisitingFileIncremenet(location, fileName, "csv");
-
-            string exportFileLocation = String.Concat(location, Path.DirectorySeparatorChar, fileName);
-
-            List<string> listOfLines = PrepFileForExport(exportDict);
-
-            try
-            {
-                Console.WriteLine($"writing file {fileName} to location {exportFileLocation}");
-                System.IO.File.WriteAllLines(exportFileLocation, listOfLines);
-            }
-            catch
-            {
-                Console.Error.WriteLine("Could not write file to location. Verify permissions/file in use!");
-            }
-        }
-
         public static List<string> PrepFileForExport(List<Dictionary<string, string>> exportDict)
         {
             //rebuild dict for csv export
@@ -108,7 +105,6 @@ namespace FileManager.Entities
                 }
             }
         }
-
         private static List<string> ParseCSVColumnsToQuotes(List<string> newColumnKeys)
         {
             List<string> parseNewColumnKeys = new List<string>();
@@ -130,6 +126,5 @@ namespace FileManager.Entities
 
             return parseNewColumnKeys;
         }
-
     }
 }
