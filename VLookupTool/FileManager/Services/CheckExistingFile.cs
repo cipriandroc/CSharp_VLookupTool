@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-
-namespace FileManager.Services
+﻿namespace FileManager.Services
 {
     public static class CheckExistingFile
     {
@@ -34,6 +32,5 @@ namespace FileManager.Services
 
             return fullFileName;
         }
-
-}
+    }
 }
