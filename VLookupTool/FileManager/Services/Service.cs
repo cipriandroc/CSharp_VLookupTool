@@ -27,7 +27,7 @@ namespace FileManager.Services
                     return currentDir;
                 }
 
-                currentDir = DirectoryProcessor.Get(currentDir, input);
+                currentDir = DirectoryProcessor.ResolvePath(currentDir, input);
             }
         }
         private static string DisplayLocationContents(List<string> fileExtensions, string currentDir, bool DirectorySelector)

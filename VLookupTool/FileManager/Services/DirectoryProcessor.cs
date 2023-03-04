@@ -5,7 +5,7 @@ namespace FileManager.Services
     public static class DirectoryProcessor
     {
 
-        public static string Get(string currentDir, string input)
+        public static string ResolvePath(string currentDir, string input)
         {
             string newPath;
 
