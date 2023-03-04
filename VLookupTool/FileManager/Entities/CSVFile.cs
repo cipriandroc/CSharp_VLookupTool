@@ -63,7 +63,7 @@ namespace FileManager.Entities
         public static List<string> PrepFileForExport(List<Dictionary<string, string>> exportDict)
         {
             //rebuild dict for csv export
-            List<string> newColumnKeys = ExtractDictKeys.Execute(exportDict[0]);
+            List<string> newColumnKeys = ExtractDictKeys(exportDict[0]);
 
             //parse column keys to identify if any contains comma and add double quotes so CSV doesn't split headers
             List<string> parseNewColumnKeys = ParseCSVColumnsToQuotes(newColumnKeys);
@@ -82,6 +82,17 @@ namespace FileManager.Entities
             }
 
             return parseListOfDictsToStrings;
+        }
+        public static List<string> ExtractDictKeys(Dictionary<string, string> dict)
+        {
+            List<string> list = new List<string>();
+
+            foreach (string key in dict.Keys)
+            {
+                list.Add(key);
+            }
+
+            return list;
         }
         private static void ParseCSVDictLinesToQuotes(List<Dictionary<string, string>> loadFileA)
         {

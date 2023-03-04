@@ -1,4 +1,4 @@
-﻿namespace FileManager.Services
+﻿namespace FileManager.Processors
 {
     public static class FileProcessor
     {

@@ -1,6 +1,6 @@
 ﻿using FileManager.Enums;
 
-namespace FileManager.Services
+namespace FileManager.Processors
 {
     public static class DirectoryProcessor
     {
@@ -15,7 +15,7 @@ namespace FileManager.Services
 
                 return CheckValidDirectory(currentDir, newPath);
             }
-            
+
             if (input == ConsoleOptions.CurrentPath.ToString())
             {
                 newPath = Directory.GetCurrentDirectory();
@@ -40,11 +40,11 @@ namespace FileManager.Services
         {
             string newPath;
             string[] splitPath = currentDir.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
-            newPath = String.Join(Path.DirectorySeparatorChar, splitPath);
+            newPath = string.Join(Path.DirectorySeparatorChar, splitPath);
 
             if (newPath == currentDir.Split(Path.DirectorySeparatorChar)[0])
             {
-                newPath = String.Concat(newPath, Path.DirectorySeparatorChar);
+                newPath = string.Concat(newPath, Path.DirectorySeparatorChar);
             }
 
             return newPath;
