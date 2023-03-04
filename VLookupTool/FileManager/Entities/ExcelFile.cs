@@ -9,7 +9,7 @@ namespace FileManager.Entities
         public static List<Dictionary<string, string>> Load(string path)
         {
 
-            return FileToDict(path);
+            return FileContentsToDict(path);
         }
 
         public static void Save(string location, string fileName, List<Dictionary<string, string>> exportDict)
@@ -55,8 +55,7 @@ namespace FileManager.Entities
                 }
             }
         }
-
-        public static List<Dictionary<string, string>> FileToDict(string path)
+        public static List<Dictionary<string, string>> FileContentsToDict(string path)
         {
             var result = new List<Dictionary<string, string>>();
 
