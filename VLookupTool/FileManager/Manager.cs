@@ -21,11 +21,6 @@ namespace FileManager
 
             string filePath =  Service.Start(fileExtensions, false, Path);
 
-            if (String.IsNullOrEmpty(filePath))
-            {
-                throw new Exception("No selection made");
-            }
-
             Path = ExtractFolderFromFilePath(filePath);
 
             AnsiConsole.Write(new Markup($"[bold green]Selected[/] [yellow]{filePath}[/]" + "\n"));
