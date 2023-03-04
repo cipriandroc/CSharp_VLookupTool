@@ -9,7 +9,7 @@ namespace VLookupTool
         static void Main(string[] args)
         {
 
-            FileManager.Program fileManager = new FileManager.Program();
+            FileManager.Manager fileManager = new FileManager.Manager();
 
             Console.WriteLine("Select source data(A) for VLOOKUP");
             DataObject dataA = new DataObject(fileManager.FileLoader());

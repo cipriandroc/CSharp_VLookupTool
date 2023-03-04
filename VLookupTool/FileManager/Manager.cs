@@ -6,11 +6,11 @@ using Spectre.Console;
 namespace FileManager
 {
 
-    public class Program
+    public class Manager
     {
         private string Path { get; set; }
 
-        public Program() 
+        public Manager() 
         {
             Path = System.IO.Path.GetPathRoot(Directory.GetCurrentDirectory());
         }
@@ -19,7 +19,7 @@ namespace FileManager
         {
             List<string> fileExtensions = GetSupportedImportFileExtensions();
 
-            string filePath =  Manager.Start(fileExtensions, false, Path);
+            string filePath =  Service.Start(fileExtensions, false, Path);
 
             if (String.IsNullOrEmpty(filePath))
             {
@@ -35,7 +35,7 @@ namespace FileManager
 
         public string DirectorySelector()
         {
-            string getDirectory = Manager.Start(new List<string> { }, true, Path);
+            string getDirectory = Service.Start(new List<string> { }, true, Path);
 
             Path = getDirectory;
 
@@ -96,7 +96,7 @@ namespace FileManager
 
         private static string ExtractFolderFromFilePath(string filePath)
         {
-            string[] splitPath = filePath.Split(Path.DirectorySeparatorChar).SkipLast(1).ToArray();
+            string[] splitPath = filePath.Split(System.IO.Path.DirectorySeparatorChar).SkipLast(1).ToArray();
             string newPath = string.Join(System.IO.Path.DirectorySeparatorChar, splitPath);
 
             return newPath;

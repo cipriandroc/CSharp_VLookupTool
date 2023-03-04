@@ -3,7 +3,7 @@ using Spectre.Console;
 
 namespace FileManager.Services
 {
-    public class Manager
+    public class Service
     {
         public static string Start(List<string> fileExtensions, bool DirectorySelector, string currentDir)
         {
