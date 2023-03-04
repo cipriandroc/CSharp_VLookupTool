@@ -19,7 +19,7 @@
         {
             string[] files = Directory.GetFiles(currentDir);
 
-            var matchingFiles = new List<string>();
+            List<string> matchingFiles = new List<string>();
 
             foreach (string file in files)
             {
