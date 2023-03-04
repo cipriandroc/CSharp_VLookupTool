@@ -3,7 +3,7 @@
     public static class FileProcessor
     {
 
-        public static string Get(string directory, string file)
+        public static string ResolveFile(string directory, string file)
         {
             string filePath = Path.Combine(directory, file);
 

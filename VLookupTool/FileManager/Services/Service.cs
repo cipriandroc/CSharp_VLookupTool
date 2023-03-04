@@ -17,7 +17,7 @@ namespace FileManager.Services
                     Environment.Exit(0);
                 }
 
-                string selectedFile = FileProcessor.Get(currentDir, input);
+                string selectedFile = FileProcessor.ResolveFile(currentDir, input);
 
                 if (!String.IsNullOrEmpty(selectedFile))
                 {
