@@ -16,6 +16,6 @@ To use the VLookupTool application, follow these steps:
 6. Press enter to perform the match and extract the selected columns from fileB.
 7. You will be prompted to select a location to save the result file. The filename will include today's date, and if there are already existing files with the same name, a numeric suffix (e.g. (1), (2), etc.) will be added.
 
-Note: VLookupTool currently only supports CSV files, but support for other data file formats is planned for future versions.
+Note: VLookupTool currently supports CSV and Excel files.
 
-The repository contains fileA.csv and fileB.csv to serve as sample data.
+The repository contains sample files under the _sampleFiles folder.
