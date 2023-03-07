@@ -6,6 +6,8 @@ The tool is ideal for data analysts, researchers, and developers who need to mat
 
 # Usage
 
+- this tool requires dotnet 7 to be installed on the machine
+
 To use the VLookupTool application, follow these steps:
 
 1. Start the application by running the executable file.
