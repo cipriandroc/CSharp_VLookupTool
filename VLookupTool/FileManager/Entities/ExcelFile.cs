@@ -17,10 +17,11 @@ namespace FileManager.Entities
             fileName = CheckExistingFile.GetExisitingFileIncremenet(location, fileName, "xlsx");
             string exportFileLocation = Path.Combine(location, fileName);
 
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             using (ExcelPackage package = new ExcelPackage())
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
-
                 // Write the headers to the first row of the worksheet
                 int headerRow = 1;
                 int headerCol = 1;
