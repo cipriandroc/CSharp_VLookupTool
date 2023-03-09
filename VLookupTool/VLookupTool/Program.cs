@@ -53,7 +53,7 @@ namespace VLookupTool
 
                 foreach (Dictionary<string, string> rowB in loadFileB)
                 {
-                    if (rowA[columnFileA] != rowB[columnFileB])
+                    if (rowA[columnFileA].ToLower() != rowB[columnFileB].ToLower())
                     {
                         continue;
                     }
