@@ -55,7 +55,7 @@ namespace FileManager
             foreach (SupportedExportFileExtensions fileExtension in (SupportedExportFileExtensions[])Enum.GetValues(typeof(SupportedExportFileExtensions)))
             {
                 string convertToString = fileExtension.ToString();
-                fileExtensions.Add((String.Concat('.', convertToString)));
+                fileExtensions.Add(convertToString);
             }
 
             return fileExtensions;
@@ -74,9 +74,6 @@ namespace FileManager
                     .AddChoices(tempExportFileTypes)
                     );
 
-            //implement translation from input to return interface for saving file from method
-            //from export file builder class
-
             Console.WriteLine("Select export file location");
             string exportLocation = DirectorySelector();
 
@@ -86,7 +83,20 @@ namespace FileManager
 
             string fileName = String.Concat(thisDay,"_","parsedFile");
 
-            ExcelFile.Save(exportLocation, fileName, vlookupDict);
+
+            if (input == SupportedExportFileExtensions.csv.ToString())
+            {
+                CSVFile.Save(exportLocation, fileName, vlookupDict);
+                return;
+            }
+
+            if (input == SupportedExportFileExtensions.xlsx.ToString())
+            {
+                ExcelFile.Save(exportLocation, fileName, vlookupDict);
+                return;
+            }
+
+            AnsiConsole.Write(new Markup($"[bold yellow]Exception error, no supported extension selected![/]"));
         }
 
         private static string ExtractFolderFromFilePath(string filePath)
