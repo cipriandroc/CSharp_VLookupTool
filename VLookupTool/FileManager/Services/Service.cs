@@ -6,18 +6,29 @@ namespace FileManager.Services
 {
     public class Service
     {
-        public static string Start(List<string> fileExtensions, bool DirectorySelector, string currentDir)
+        public static string Start(List<string> fileExtensions, bool ManualFilePath, bool DirectorySelector, string currentDir)
         {
             while (true)
             {
-                string input = DisplayLocationContents(fileExtensions, currentDir, DirectorySelector);
+                string input = DisplayLocationContents(fileExtensions, currentDir, ManualFilePath, DirectorySelector);
+
+                string selectedFile;
 
                 if (input == ConsoleOptions.exit.ToString())
                 {
                     Environment.Exit(0);
                 }
 
-                string selectedFile = FileProcessor.ResolveFile(currentDir, input);
+                if (input == ConsoleOptions.ManualFilePath.ToString())
+                {
+                    Console.Write("Enter the manual file path: ");
+                    input = Convert.ToString(Console.ReadLine());
+                    selectedFile = FileProcessor.ResolveFilePath(input);
+                }
+                else
+                {
+                    selectedFile = FileProcessor.ResolveFile(currentDir, input);
+                }                
 
                 if (!String.IsNullOrEmpty(selectedFile))
                 {
@@ -31,12 +42,17 @@ namespace FileManager.Services
                 currentDir = DirectoryProcessor.ResolvePath(currentDir, input);
             }
         }
-        private static string DisplayLocationContents(List<string> fileExtensions, string currentDir, bool DirectorySelector)
+        private static string DisplayLocationContents(List<string> fileExtensions, string currentDir, bool ManualFilePath, bool DirectorySelector)
         {
             List<string> childItems = ConcatDirectoriesAndFiles(fileExtensions, currentDir);
 
             List<string> optionList = new List<string>
                     { ConsoleOptions.UpOneLevel.ToString(), ConsoleOptions.CurrentPath.ToString(), ConsoleOptions.GoToRoot.ToString(), ConsoleOptions.exit.ToString() };
+
+            if(ManualFilePath)
+            {
+                optionList.Add(ConsoleOptions.ManualFilePath.ToString());
+            }
 
             if (DirectorySelector)
             {

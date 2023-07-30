@@ -19,7 +19,7 @@ namespace FileManager
         {
             List<string> fileExtensions = GetSupportedImportFileExtensions();
 
-            string filePath =  Service.Start(fileExtensions, false, Path);
+            string filePath =  Service.Start(fileExtensions, true, false, Path);
 
             Path = ExtractFolderFromFilePath(filePath);
 
@@ -30,9 +30,9 @@ namespace FileManager
 
         public string DirectorySelector()
         {
-            string getDirectory = Service.Start(new List<string> { }, true, Path);
+            string getDirectory = Service.Start(new List<string> { },false, true, Path);
 
-            Path = getDirectory;
+            Path = getDirectory; 
 
             return getDirectory;
         }

@@ -7,6 +7,7 @@
         CurrentPath,
         GoToRoot,
         SelectDirectory,
+        ManualFilePath,
         exit
     }
 }

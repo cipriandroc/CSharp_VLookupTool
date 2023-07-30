@@ -15,6 +15,16 @@
             return null;
         }
 
+        public static string ResolveFilePath(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return filePath;
+            }
+
+            return null;
+        }
+
         public static List<string> GetFilesByExtensions(string currentDir, List<string> extensions)
         {
             string[] files = Directory.GetFiles(currentDir);
